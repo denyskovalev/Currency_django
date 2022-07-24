@@ -9,4 +9,3 @@ urlpatterns = [
     path('generate-password/', generate_password),
     path('hello/', hello_world),
 ]
-
