@@ -1,4 +1,5 @@
 
+from django.shortcuts import render
 from django.http import HttpResponse
 from currency.utils import get_password, get_rate_list, get_contact_us
 
@@ -18,12 +19,16 @@ def hello_world(request):
 
 def rate_list(request):
 
-    rate = get_rate_list()
-    rate_html = []
-    for r in rate:
-        rate_html.append(f'<br>{r}</br>')
+    # cont_us = get_contact_us()
+    # contact_us_html = []
+    # for c in cont_us:
+    #     contact_us_html.append(f'<br>{c}</br>')
 
-    return HttpResponse(rate_html)
+    context = {
+        'message': 'HELLO TEXT'
+        }
+
+    return render(request, 'rate_list.html', context=context)
 
 
 def contact_us(request):
@@ -33,4 +38,4 @@ def contact_us(request):
     for c in cont_us:
         contact_us_html.append(f'<br>{c}</br>')
 
-    return HttpResponse(contact_us_html)
+    return HttpResponse(str(contact_us_html))
