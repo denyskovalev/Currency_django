@@ -11,4 +11,3 @@ def get_contact_us():
         email_list.append(contact_us_str)
 
     return email_list
-
