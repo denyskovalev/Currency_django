@@ -1,36 +1,25 @@
 
-from django.http import HttpResponse
-from currency.utils import get_password, get_rate_list, get_contact_us
-
-# Create your views here.
+from django.shortcuts import render
+from currency.models import Rate, ContactUs
 
 
-def generate_password(request):
-    length = int(request.GET.get('length'))
-
-    password = get_password(length)
-    return HttpResponse(password)
-
-
-def hello_world(request):
-    return HttpResponse('Hello world!')
+def index_page(request):
+    return render(request, 'index.html')
 
 
 def rate_list(request):
 
-    rate = get_rate_list()
-    rate_html = []
-    for r in rate:
-        rate_html.append(f'<br>{r}</br>')
+    context = {
+        'rate_list': Rate.objects.all(),
+    }
 
-    return HttpResponse(rate_html)
+    return render(request, 'rate_list.html', context=context)
 
 
 def contact_us(request):
 
-    cont_us = get_contact_us()
-    contact_us_html = []
-    for c in cont_us:
-        contact_us_html.append(f'<br>{c}</br>')
+    context = {
+        'contact_us': ContactUs.objects.all(),
+    }
 
-    return HttpResponse(contact_us_html)
+    return render(request, 'contact_us.html', context=context)

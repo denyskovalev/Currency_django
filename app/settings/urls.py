@@ -2,12 +2,11 @@
 from django.contrib import admin
 from django.urls import path
 
-from currency.views import generate_password, hello_world, contact_us, rate_list
+from currency.views import contact_us, rate_list, index_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('generate-password/', generate_password),
-    path('hello/', hello_world),
     path('contact-us/', contact_us),
-    path('rate/list/', rate_list)
+    path('rate/list/', rate_list),
+    path('', index_page),
 ]
