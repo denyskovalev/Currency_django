@@ -10,6 +10,9 @@
             <th>Currency to:</th>
             <th>Sale:</th>
             <th>Buy:</th>
+            <th>
+                <a href="/rate/create/" >Create new</a>
+            </th>
         </tr>
         {% for rate in rate_list %}
             <tr>
@@ -18,6 +21,11 @@
                 <td>{{ rate.currency_type }}</td>
                 <td>{{ rate.sale }}</td>
                 <td>{{ rate.buy }}</td>
+                <td>
+                    <a href="#">Read#</a>
+                    <a href="#">Update#</a>
+                    <a href="#">Delete#</a>
+                </td>
             </tr>
         {% endfor %}
     </table>
