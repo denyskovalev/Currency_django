@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Source delete{% endblock title %}
+
+{% block main_content %}
+    Delete this source?
+
+    <div>Are you sure about that?</div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Delete this item</button>
+    </form>
+{% endblock main_content %}

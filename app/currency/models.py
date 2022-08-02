@@ -20,3 +20,10 @@ class ContactUs(models.Model):
     subject = models.CharField(max_length=32)
     message = models.TextField(max_length=999)
     date_message = models.DateTimeField(auto_now_add=True)
+
+
+class Source(models.Model):
+
+    source_name = models.CharField(max_length=64)
+    source_url = models.CharField(max_length=255)
+    created = models.DateTimeField(auto_now_add=True)
