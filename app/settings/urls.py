@@ -2,7 +2,9 @@
 from django.contrib import admin
 from django.urls import path
 
-from currency.views import contact_us, rate_list, index_page, create_rate_list, update_rate_list, rate_details, rate_delete
+from currency.views import contact_us, rate_list, index_page, create_rate_list,\
+    update_rate_list, rate_details, rate_delete, source_show, source_create, \
+    source_details, source_update, source_delete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,4 +19,11 @@ urlpatterns = [
 
     # Contact us
     path('contact-us/', contact_us),
+
+    # Source
+    path('source/show/', source_show),
+    path('source/create/', source_create),
+    path('source/details/<int:source_id>/', source_details),
+    path('source/update/<int:source_id>/', source_update),
+    path('source/delete/<int:source_id>/', source_delete),
 ]

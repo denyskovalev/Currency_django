@@ -1,7 +1,7 @@
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from currency.models import Rate, ContactUs
-from currency.forms import RateForm
+from currency.models import Rate, ContactUs, Source
+from currency.forms import RateForm, SourceForm
 
 
 # Index functions
@@ -84,3 +84,64 @@ def contact_us(request):
     }
 
     return render(request, 'contact_us.html', context=context)
+
+
+# Source
+def source_show(request):
+
+    context = {
+        'source_list': Source.objects.all(),
+    }
+
+    return render(request, 'source_show.html', context=context)
+
+
+def source_create(request):
+
+    if request.method == 'POST':
+        form = SourceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/source/show/')
+    elif request.method == 'GET':
+        form = SourceForm()
+
+    context = {'form': form}
+
+    return render(request, 'source_create.html', context=context)
+
+
+def source_update(request, source_id):
+
+    source_instance = get_object_or_404(Source, id=source_id)
+
+    if request.method == 'POST':
+        form = SourceForm(request.POST, instance=source_instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/source/show/')
+    elif request.method == 'GET':
+        form = SourceForm(instance=source_instance)
+
+    context = {'form': form}
+
+    return render(request, 'source_create.html', context=context)
+
+
+def source_details(request, source_id):
+
+    source_instance = get_object_or_404(Source, id=source_id)
+    context = {'instance': source_instance}
+
+    return render(request, 'source_details.html', context=context)
+
+
+def source_delete(request, source_id):
+
+    source_instance = get_object_or_404(Source, id=source_id)
+    context = {'instance': source_instance}
+    if request.method == "POST":
+        source_instance.delete()
+        return HttpResponseRedirect('/source/show/')
+
+    return render(request, 'source_delete.html', context=context)

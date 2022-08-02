@@ -1,0 +1,11 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Source details{% endblock title %}
+
+{% block main_content %}
+    <div>ID: {{ instance.id }}</div>
+    <div>Source name: {{ instance.source_name}}</div>
+    <div>Source url: {{ instance.source_url }}</div>
+    <div>Created at: {{ instance.created }}</div>
+{% endblock main_content %}
