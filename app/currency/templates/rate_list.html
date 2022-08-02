@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block title %}Rate list{% endblock title %}
@@ -22,9 +23,9 @@
                 <td>{{ rate.sale }}</td>
                 <td>{{ rate.buy }}</td>
                 <td>
-                    <a href="#">Read#</a>
-                    <a href="#">Update#</a>
-                    <a href="#">Delete#</a>
+                    <a href="/rate/details/{{ rate.id }}/">View details</a>
+                    <a href="/rate/update/{{ rate.id }}/">Edit</a>
+                    <a href="/rate/delete/{{ rate.id }}/">Delete</a>
                 </td>
             </tr>
         {% endfor %}

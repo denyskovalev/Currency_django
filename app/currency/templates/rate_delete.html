@@ -1,15 +1,15 @@
 
 {% extends 'base.html' %}
 
-{% block title %}Rate create{% endblock title %}
+{% block title %}Rate delete{% endblock title %}
 
 {% block main_content %}
     Rate create
 
+    <div>Are you sure about that?</div>
+
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="reset">Reset</button>
-        <button type="submit">Send</button>
+        <button type="submit">Delete this item</button>
     </form>
 {% endblock main_content %}
