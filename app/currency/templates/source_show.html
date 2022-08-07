@@ -10,7 +10,7 @@
             <th>Source name:</th>
             <th>Source url:</th>
             <th>
-                <a href="/source/create/">Create a new source</a>
+                <a href="{% url 'source_create' %}">Create a new source</a>
             </th>
         </tr>
         {% for source in source_list %}
@@ -19,9 +19,9 @@
                 <td>{{ source.source_name }}</td>
                 <td>{{ source.source_url }}</td>
                 <td>
-                    <a href="/source/details/{{ source.id }}">Show details</a>
-                    <a href="/source/update/{{ source.id }}">Change source</a>
-                    <a href="/source/delete/{{ source.id }}">Delete source</a>
+                    <a href="{% url 'source_details' source.id %}">Show details</a>
+                    <a href="{% url 'source_update' source.id %}">Change source</a>
+                    <a href="{% url 'source_delete' source.id %}">Delete source</a>
                 </td>
             </tr>
         {% endfor %}
