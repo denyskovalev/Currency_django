@@ -18,8 +18,8 @@
         {% for rate in rate_list %}
             <tr>
                 <td>{{ rate.id }}</td>
-                <td>{{ rate.base_currency_type }}</td>
-                <td>{{ rate.currency_type }}</td>
+                <td>{{ rate.get_base_currency_type_display }}</td>
+                <td>{{ rate.get_currency_type_display }}</td>
                 <td>{{ rate.sale }}</td>
                 <td>{{ rate.buy }}</td>
                 <td>

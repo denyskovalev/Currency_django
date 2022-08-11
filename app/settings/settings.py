@@ -41,8 +41,10 @@ INSTALLED_APPS = [
     # 3rd
     'debug_toolbar',
     'django_extensions',
+    'rangefilter',
 
     'currency',
+    'import_export',
 ]
 
 MIDDLEWARE = [
