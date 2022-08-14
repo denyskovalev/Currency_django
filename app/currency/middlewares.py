@@ -35,6 +35,4 @@ class ResponseLogMiddleware:
                                    ip_client=ip_client,
                                    path=path)
 
-        print('Response log successful created!')
-
         return response

@@ -1,7 +1,7 @@
 
 from django.urls import reverse_lazy
 
-from currency.models import Rate, ContactUs, Source, ResponseLog
+from currency.models import Rate, ContactUs, Source
 from currency.forms import RateForm, SourceForm
 from django.views import generic
 
