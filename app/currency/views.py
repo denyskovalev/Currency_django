@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from currency.models import Rate, ContactUs, Source
 from currency.forms import RateForm, SourceForm
 from django.views import generic
+from django.core.mail import send_mail
 
 
 # Index class
@@ -57,6 +58,39 @@ class ContactUsView(generic.ListView):
 class SourceShowView(generic.ListView):
     queryset = Source.objects.all()
     template_name = 'source_show.html'
+
+
+class ContactUsCreateView(generic.CreateView):
+    model = ContactUs
+    success_url = reverse_lazy('contact_us')
+    template_name = 'contact_us_create.html'
+    fields = (
+        'email_from',
+        'email_to',
+        'subject',
+        'message',
+    )
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        subject = 'ContactUs from Currency Project'
+        body = f'''
+        Subject from client: {self.object.subject}
+        Date: {self.object.created}
+        Message: {self.object.message}
+        Wants to contact
+        '''
+
+        send_mail(
+            subject,
+            body,
+            self.object.email_from,
+            [self.object.email_to],
+            fail_silently=False,
+        )
+
+        return response
 
 
 class SourceCreateView(generic.CreateView):

@@ -23,7 +23,6 @@ class Rate(models.Model):
 
 class ContactUs(models.Model):
 
-    mail_id = models.DecimalField(max_digits=10, decimal_places=4)
     email_from = models.EmailField(max_length=64)
     email_to = models.EmailField(max_length=64)
     subject = models.CharField(max_length=32)

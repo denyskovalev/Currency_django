@@ -14,6 +14,7 @@ urlpatterns = [
 
     # Contact us
     path('contact-us/', views.ContactUsView.as_view(), name='contact_us'),
+    path('contact-us/create/', views.ContactUsCreateView.as_view(), name='contact_us_create'),
 
     # Source
     path('source/show/', views.SourceShowView.as_view(), name='source_show'),
