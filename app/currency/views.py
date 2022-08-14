@@ -1,4 +1,4 @@
-
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 
 from currency.models import Rate, ContactUs, Source
@@ -28,6 +28,13 @@ class RateCreateView(generic.CreateView):
     template_name = 'create_rate_list.html'
     form_class = RateForm
     success_url = reverse_lazy('rate_list')
+
+
+class DownloadRateView(generic.View):
+    def get(self, request):
+        from currency.resources import RateResource
+        csv_content = RateResource().export().csv
+        return HttpResponse(csv_content, content_type='text/csv')
 
 
 class RateUpdateView(generic.UpdateView):
