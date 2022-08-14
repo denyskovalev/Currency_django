@@ -36,3 +36,13 @@ class Source(models.Model):
     source_name = models.CharField(max_length=64)
     source_url = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
+
+
+class ResponseLog(models.Model):
+
+    response_time = models.DecimalField(max_digits=10, decimal_places=8)
+    request_method = models.CharField(max_length=32)
+    query_params = models.CharField(max_length=255)
+    ip_client = models.CharField(max_length=32)
+    path = models.CharField(max_length=255)
+    created = models.DateTimeField(auto_now_add=True)
