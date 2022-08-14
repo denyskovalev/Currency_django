@@ -1,5 +1,5 @@
 from django.contrib import admin
-from currency.models import Rate, Source, ContactUs
+from currency.models import Rate, Source, ContactUs, ResponseLog
 
 
 class RateAdmin(admin.ModelAdmin):
@@ -47,6 +47,19 @@ class ContactUsAdmin(admin.ModelAdmin):
         return False
 
 
+class ResponseLogAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'response_time',
+        'request_method',
+        'query_params',
+        'ip_client',
+        'path',
+        'created',
+    )
+
+
 admin.site.register(Rate, RateAdmin)
 admin.site.register(Source, SourceAdmin)
 admin.site.register(ContactUs, ContactUsAdmin)
+admin.site.register(ResponseLog, ResponseLogAdmin)
