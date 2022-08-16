@@ -1,4 +1,19 @@
 <div>
-    <a href="/">Home</a>
-    <a href="{% url 'contact_us_create' %}">Contact us!</a>
+    <div>Hello, {{ request.user.email }}</div>
+    <div>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'contact_us_create' %}">Contact us!</a>
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <div>
+            <a href="{% url 'my_profile' request.user.id %}">My profile</a>
+            <a href="{% url 'logout' %}">LogOut</a>
+        </div>
+    {% else %}
+        <div>
+            <a href="#">Sign up!</a>
+            <a href="{% url 'login' %}">LogIn</a>
+        </div>
+    {% endif %}
 </div>

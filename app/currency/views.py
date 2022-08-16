@@ -1,10 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-
-from currency.models import Rate, ContactUs, Source
-from currency.forms import RateForm, SourceForm
 from django.views import generic
 from django.core.mail import send_mail
+
+from currency.resources import RateResource
+from currency.models import Rate, ContactUs, Source
+from currency.forms import RateForm, SourceForm
 
 
 # Index class
@@ -32,7 +34,6 @@ class RateCreateView(generic.CreateView):
 
 class DownloadRateView(generic.View):
     def get(self, request):
-        from currency.resources import RateResource
         csv_content = RateResource().export().csv
         return HttpResponse(csv_content, content_type='text/csv')
 
@@ -53,6 +54,22 @@ class RateDeleteView(generic.DeleteView):
 class RateDetailsView(generic.DetailView):
     queryset = Rate.objects.all()
     template_name = 'rate_details.html'
+
+
+# TODO move to accounts app
+# Login classes
+class UserProfileView(generic.UpdateView):
+    queryset = get_user_model().objects.all()
+    template_name = 'my_profile.html'
+    success_url = reverse_lazy('index')
+    fields = (
+        'first_name',
+        'last_name',
+    )
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
 
 
 # Contact classes
