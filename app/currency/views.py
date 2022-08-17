@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views import generic
@@ -7,6 +8,8 @@ from django.core.mail import send_mail
 from currency.resources import RateResource
 from currency.models import Rate, ContactUs, Source
 from currency.forms import RateForm, SourceForm
+
+from currency.utils import IsSuperuserRequiredMixin
 
 
 # Index class
@@ -38,14 +41,14 @@ class DownloadRateView(generic.View):
         return HttpResponse(csv_content, content_type='text/csv')
 
 
-class RateUpdateView(generic.UpdateView):
+class RateUpdateView(IsSuperuserRequiredMixin, generic.UpdateView):
     queryset = Rate.objects.all()
     template_name = 'update_rate_list.html'
     form_class = RateForm
     success_url = reverse_lazy('rate_list')
 
 
-class RateDeleteView(generic.DeleteView):
+class RateDeleteView(IsSuperuserRequiredMixin, generic.DeleteView):
     queryset = Rate.objects.all()
     template_name = 'rate_delete.html'
     success_url = reverse_lazy('rate_list')
@@ -58,7 +61,7 @@ class RateDetailsView(generic.DetailView):
 
 # TODO move to accounts app
 # Login classes
-class UserProfileView(generic.UpdateView):
+class UserProfileView(LoginRequiredMixin, generic.UpdateView):
     queryset = get_user_model().objects.all()
     template_name = 'my_profile.html'
     success_url = reverse_lazy('index')
@@ -67,9 +70,15 @@ class UserProfileView(generic.UpdateView):
         'last_name',
     )
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset
+    # 1
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     queryset = queryset.filter(id=self.request.user.id)
+    #     return queryset
+
+    # 2
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 # Contact classes

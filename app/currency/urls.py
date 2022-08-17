@@ -26,6 +26,6 @@ urlpatterns = [
 
     # TODO move to accounts app
     # Login
-    path('my-profile/<int:pk>/', views.UserProfileView.as_view(), name='my_profile'),
+    path('my-profile/', views.UserProfileView.as_view(), name='my_profile'),
 
 ]

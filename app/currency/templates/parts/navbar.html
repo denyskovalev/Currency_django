@@ -7,7 +7,7 @@
 
     {% if request.user.is_authenticated %}
         <div>
-            <a href="{% url 'my_profile' request.user.id %}">My profile</a>
+            <a href="{% url 'my_profile' %}">My profile</a>
             <a href="{% url 'logout' %}">LogOut</a>
         </div>
     {% else %}
