@@ -1,10 +1,15 @@
-
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from django.urls import reverse_lazy
-
-from currency.models import Rate, ContactUs, Source
-from currency.forms import RateForm, SourceForm
 from django.views import generic
 from django.core.mail import send_mail
+
+from currency.resources import RateResource
+from currency.models import Rate, ContactUs, Source
+from currency.forms import RateForm, SourceForm
+
+from currency.utils import IsSuperuserRequiredMixin
 
 
 # Index class
@@ -30,14 +35,20 @@ class RateCreateView(generic.CreateView):
     success_url = reverse_lazy('rate_list')
 
 
-class RateUpdateView(generic.UpdateView):
+class DownloadRateView(generic.View):
+    def get(self, request):
+        csv_content = RateResource().export().csv
+        return HttpResponse(csv_content, content_type='text/csv')
+
+
+class RateUpdateView(IsSuperuserRequiredMixin, generic.UpdateView):
     queryset = Rate.objects.all()
     template_name = 'update_rate_list.html'
     form_class = RateForm
     success_url = reverse_lazy('rate_list')
 
 
-class RateDeleteView(generic.DeleteView):
+class RateDeleteView(IsSuperuserRequiredMixin, generic.DeleteView):
     queryset = Rate.objects.all()
     template_name = 'rate_delete.html'
     success_url = reverse_lazy('rate_list')
@@ -46,6 +57,28 @@ class RateDeleteView(generic.DeleteView):
 class RateDetailsView(generic.DetailView):
     queryset = Rate.objects.all()
     template_name = 'rate_details.html'
+
+
+# TODO move to accounts app
+# Login classes
+class UserProfileView(LoginRequiredMixin, generic.UpdateView):
+    queryset = get_user_model().objects.all()
+    template_name = 'my_profile.html'
+    success_url = reverse_lazy('index')
+    fields = (
+        'first_name',
+        'last_name',
+    )
+
+    # 1
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     queryset = queryset.filter(id=self.request.user.id)
+    #     return queryset
+
+    # 2
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 # Contact classes

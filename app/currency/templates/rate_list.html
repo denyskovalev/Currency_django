@@ -13,6 +13,7 @@
             <th>Buy:</th>
             <th>
                 <a href="{% url 'rate_create' %}" >Create new</a>
+                <a href="{% url 'rate_download' %}">Download .csv</a>
             </th>
         </tr>
         {% for rate in rate_list %}
