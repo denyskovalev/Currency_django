@@ -12,8 +12,8 @@
             <th>Sale:</th>
             <th>Buy:</th>
             <th>
-                <a href="{% url 'rate_create' %}" >Create new</a>
-                <a href="{% url 'rate_download' %}">Download .csv</a>
+                <a href="{% url 'currency:rate_create' %}" >Create new</a>
+                <a href="{% url 'currency:rate_download' %}">Download .csv</a>
             </th>
         </tr>
         {% for rate in rate_list %}
@@ -24,9 +24,9 @@
                 <td>{{ rate.sale }}</td>
                 <td>{{ rate.buy }}</td>
                 <td>
-                    <a href="{% url 'rate_details' rate.id %}">View details</a>
-                    <a href="{% url 'rate_update' rate.id %}">Edit</a>
-                    <a href="{% url 'rate_delete' rate.id %}">Delete</a>
+                    <a href="{% url 'currency:rate_details' rate.id %}">View details</a>
+                    <a href="{% url 'currency:rate_update' rate.id %}">Edit</a>
+                    <a href="{% url 'currency:rate_delete' rate.id %}">Delete</a>
                 </td>
             </tr>
         {% endfor %}

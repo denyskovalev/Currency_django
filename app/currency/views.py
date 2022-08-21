@@ -110,7 +110,7 @@ class ContactUsCreateView(generic.CreateView):
         subject = 'ContactUs from Currency Project'
         body = f'''
         Subject from client: {self.object.subject}
-        Date: {self.object.created}
+        Date: {self.object.date_message}
         Message: {self.object.message}
         Wants to contact
         '''

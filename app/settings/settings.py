@@ -36,6 +36,7 @@ INSTALLED_APPS = [
 
     'currency',
     'import_export',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,9 @@ EMAIL_HOST_USER = 'testtestapp454545@gmail.com'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGOUT_REDIRECT_URL = reverse_lazy('index')
 LOGIN_URL = reverse_lazy('login')
+
+AUTH_USER_MODEL = 'accounts.User'
+
+# TODO move to env
+HTTP_SCHEMA = 'http'
+DOMAIN = 'localhost:8000'
