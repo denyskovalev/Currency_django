@@ -59,28 +59,6 @@ class RateDetailsView(generic.DetailView):
     template_name = 'rate_details.html'
 
 
-# TODO move to accounts app
-# Login classes
-class UserProfileView(LoginRequiredMixin, generic.UpdateView):
-    queryset = get_user_model().objects.all()
-    template_name = 'my_profile.html'
-    success_url = reverse_lazy('index')
-    fields = (
-        'first_name',
-        'last_name',
-    )
-
-    # 1
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     queryset = queryset.filter(id=self.request.user.id)
-    #     return queryset
-
-    # 2
-    def get_object(self, queryset=None):
-        return self.request.user
-
-
 # Contact classes
 class ContactUsView(generic.ListView):
     queryset = ContactUs.objects.all()

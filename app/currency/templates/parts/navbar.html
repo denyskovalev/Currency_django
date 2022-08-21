@@ -7,7 +7,7 @@
 
     {% if request.user.is_authenticated %}
         <div>
-            <a href="{% url 'currency:my_profile' %}">My profile</a>
+            <a href="{% url 'accounts:my_profile' %}">My profile</a>
             <a href="{% url 'logout' %}">LogOut</a>
         </div>
     {% else %}
