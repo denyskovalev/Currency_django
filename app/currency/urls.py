@@ -25,8 +25,4 @@ urlpatterns = [
     path('source/update/<int:pk>/', views.SourceUpdateView.as_view(), name='source_update'),
     path('source/delete/<int:pk>/', views.SourceDeleteView.as_view(), name='source_delete'),
 
-    # TODO move to accounts app
-    # Login
-    path('my-profile/', views.UserProfileView.as_view(), name='my_profile'),
-
 ]

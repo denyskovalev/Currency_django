@@ -1,5 +1,4 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views import generic
@@ -24,7 +23,7 @@ class IndexView(generic.TemplateView):
 
 # Rate list classes
 class RateListView(generic.ListView):
-    queryset = Rate.objects.all()
+    queryset = Rate.objects.all().select_related('source')
     template_name = 'rate_list.html'
 
 
@@ -32,7 +31,7 @@ class RateCreateView(generic.CreateView):
     queryset = Rate.objects.all()
     template_name = 'create_rate_list.html'
     form_class = RateForm
-    success_url = reverse_lazy('rate_list')
+    success_url = reverse_lazy('currency:rate_list')
 
 
 class DownloadRateView(generic.View):
@@ -45,40 +44,18 @@ class RateUpdateView(IsSuperuserRequiredMixin, generic.UpdateView):
     queryset = Rate.objects.all()
     template_name = 'update_rate_list.html'
     form_class = RateForm
-    success_url = reverse_lazy('rate_list')
+    success_url = reverse_lazy('currency:rate_list')
 
 
 class RateDeleteView(IsSuperuserRequiredMixin, generic.DeleteView):
     queryset = Rate.objects.all()
     template_name = 'rate_delete.html'
-    success_url = reverse_lazy('rate_list')
+    success_url = reverse_lazy('currency:rate_list')
 
 
 class RateDetailsView(generic.DetailView):
     queryset = Rate.objects.all()
     template_name = 'rate_details.html'
-
-
-# TODO move to accounts app
-# Login classes
-class UserProfileView(LoginRequiredMixin, generic.UpdateView):
-    queryset = get_user_model().objects.all()
-    template_name = 'my_profile.html'
-    success_url = reverse_lazy('index')
-    fields = (
-        'first_name',
-        'last_name',
-    )
-
-    # 1
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     queryset = queryset.filter(id=self.request.user.id)
-    #     return queryset
-
-    # 2
-    def get_object(self, queryset=None):
-        return self.request.user
 
 
 # Contact classes
@@ -95,7 +72,7 @@ class SourceShowView(generic.ListView):
 
 class ContactUsCreateView(generic.CreateView):
     model = ContactUs
-    success_url = reverse_lazy('contact_us')
+    success_url = reverse_lazy('currency:contact_us')
     template_name = 'contact_us_create.html'
     fields = (
         'email_from',
@@ -130,20 +107,20 @@ class SourceCreateView(generic.CreateView):
     queryset = Source.objects.all()
     template_name = 'source_create.html'
     form_class = SourceForm
-    success_url = reverse_lazy('source_show')
+    success_url = reverse_lazy('currency:source_show')
 
 
 class SourceUpdateView(generic.UpdateView):
     queryset = Source.objects.all()
     template_name = 'source_create.html'
     form_class = SourceForm
-    success_url = reverse_lazy('source_show')
+    success_url = reverse_lazy('currency:source_show')
 
 
 class SourceDeleteView(generic.DeleteView):
     queryset = Source.objects.all()
     template_name = 'source_delete.html'
-    success_url = reverse_lazy('source_show')
+    success_url = reverse_lazy('currency:source_show')
 
 
 class SourceDetailsView(generic.DetailView):

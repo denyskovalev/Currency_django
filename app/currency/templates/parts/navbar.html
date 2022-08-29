@@ -1,19 +1,22 @@
-<div>
-    <div>Hello, {{ request.user.email }}</div>
-    <div>
-        <a href="{% url 'index' %}">Home</a>
-        <a href="{% url 'currency:contact_us_create' %}">Contact us!</a>
-    </div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p>Currency project</p>
+            <a href="#" class="navbar-brand">Hello! {{ request.user.email }}</a>
+        </div>
 
-    {% if request.user.is_authenticated %}
         <div>
-            <a href="{% url 'currency:my_profile' %}">My profile</a>
-            <a href="{% url 'logout' %}">LogOut</a>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'currency:contact_us_create' %}">Contact us!</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'accounts:my_profile' %}">My profile</a></li>
+                    <li><a href="{% url 'logout' %}">LogOut</a></li>
+                {% else %}
+                    <li><a href="{% url 'accounts:signup' %}">Sign up!</a></li>
+                    <li><a href="{% url 'login' %}">LogIn</a></li>
+                {% endif %}
+            </ul>
         </div>
-    {% else %}
-        <div>
-            <a href="{% url 'accounts:signup' %}">Sign up!</a>
-            <a href="{% url 'login' %}">LogIn</a>
-        </div>
-    {% endif %}
-</div>
+    </div>
+</nav>

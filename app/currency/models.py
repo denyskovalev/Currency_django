@@ -2,6 +2,13 @@ from django.db import models
 from currency.model_choices import CurrencyTypes
 
 
+class Source(models.Model):
+
+    source_name = models.CharField(max_length=64)
+    source_url = models.URLField()
+    created = models.DateTimeField(auto_now_add=True)
+
+
 class Rate(models.Model):
 
     # def get_{field_name}_display() if field has choices
@@ -17,7 +24,7 @@ class Rate(models.Model):
     )
     sale = models.DecimalField(max_digits=10, decimal_places=4)  # 999999.9999
     buy = models.DecimalField(max_digits=10, decimal_places=4)
-    source = models.CharField(max_length=64)
+    source = models.ForeignKey('currency.Source', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
 
@@ -28,13 +35,6 @@ class ContactUs(models.Model):
     subject = models.CharField(max_length=32)
     message = models.TextField(max_length=999)
     date_message = models.DateTimeField(auto_now_add=True)
-
-
-class Source(models.Model):
-
-    source_name = models.CharField(max_length=64)
-    source_url = models.CharField(max_length=255)
-    created = models.DateTimeField(auto_now_add=True)
 
 
 class ResponseLog(models.Model):
