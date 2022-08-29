@@ -51,4 +51,3 @@ class UserProfileView(LoginRequiredMixin, generic.UpdateView):
     # 2
     def get_object(self, queryset=None):
         return self.request.user
-
