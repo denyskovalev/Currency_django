@@ -32,7 +32,7 @@ class RateCreateView(generic.CreateView):
     queryset = Rate.objects.all()
     template_name = 'create_rate_list.html'
     form_class = RateForm
-    success_url = reverse_lazy('rate_list')
+    success_url = reverse_lazy('currency:rate_list')
 
 
 class DownloadRateView(generic.View):
@@ -45,13 +45,13 @@ class RateUpdateView(IsSuperuserRequiredMixin, generic.UpdateView):
     queryset = Rate.objects.all()
     template_name = 'update_rate_list.html'
     form_class = RateForm
-    success_url = reverse_lazy('rate_list')
+    success_url = reverse_lazy('currency:rate_list')
 
 
 class RateDeleteView(IsSuperuserRequiredMixin, generic.DeleteView):
     queryset = Rate.objects.all()
     template_name = 'rate_delete.html'
-    success_url = reverse_lazy('rate_list')
+    success_url = reverse_lazy('currency:rate_list')
 
 
 class RateDetailsView(generic.DetailView):
@@ -73,7 +73,7 @@ class SourceShowView(generic.ListView):
 
 class ContactUsCreateView(generic.CreateView):
     model = ContactUs
-    success_url = reverse_lazy('contact_us')
+    success_url = reverse_lazy('currency:contact_us')
     template_name = 'contact_us_create.html'
     fields = (
         'email_from',
@@ -108,20 +108,20 @@ class SourceCreateView(generic.CreateView):
     queryset = Source.objects.all()
     template_name = 'source_create.html'
     form_class = SourceForm
-    success_url = reverse_lazy('source_show')
+    success_url = reverse_lazy('currency:source_show')
 
 
 class SourceUpdateView(generic.UpdateView):
     queryset = Source.objects.all()
     template_name = 'source_create.html'
     form_class = SourceForm
-    success_url = reverse_lazy('source_show')
+    success_url = reverse_lazy('currency:source_show')
 
 
 class SourceDeleteView(generic.DeleteView):
     queryset = Source.objects.all()
     template_name = 'source_delete.html'
-    success_url = reverse_lazy('source_show')
+    success_url = reverse_lazy('currency:source_show')
 
 
 class SourceDetailsView(generic.DetailView):

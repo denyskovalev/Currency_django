@@ -6,23 +6,25 @@
 {% block main_content %}
     <table>
         <tr>
-            <th>ID:</th>
-            <th>Currency from:</th>
-            <th>Currency to:</th>
-            <th>Sale:</th>
-            <th>Buy:</th>
-            <th>
+            <th scope="col">ID:</th>
+            <th scope="col">Currency from:</th>
+            <th scope="col">Currency to:</th>
+            <th scope="col">Sale:</th>
+            <th scope="col">Buy:</th>
+            <th scope="col">Source:</th>
+            <th scope="col">
                 <a href="{% url 'currency:rate_create' %}" >Create new</a>
                 <a href="{% url 'currency:rate_download' %}">Download .csv</a>
             </th>
         </tr>
         {% for rate in rate_list %}
             <tr>
-                <td>{{ rate.id }}</td>
+                <th  scope="row">{{ rate.id }}</th>
                 <td>{{ rate.get_base_currency_type_display }}</td>
                 <td>{{ rate.get_currency_type_display }}</td>
                 <td>{{ rate.sale }}</td>
                 <td>{{ rate.buy }}</td>
+                <td>{{ rate.source.source_name }}</td>
                 <td>
                     <a href="{% url 'currency:rate_details' rate.id %}">View details</a>
                     <a href="{% url 'currency:rate_update' rate.id %}">Edit</a>
