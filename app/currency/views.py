@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from currency.resources import RateResource
 from currency.models import Rate, ContactUs, Source
 from currency.forms import RateForm, SourceForm
+from currency.tasks import send_contact_us_email
 
 from currency.utils import IsSuperuserRequiredMixin
 
@@ -84,21 +85,7 @@ class ContactUsCreateView(generic.CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
 
-        subject = 'ContactUs from Currency Project'
-        body = f'''
-        Subject from client: {self.object.subject}
-        Date: {self.object.date_message}
-        Message: {self.object.message}
-        Wants to contact
-        '''
-
-        send_mail(
-            subject,
-            body,
-            self.object.email_from,
-            [self.object.email_to],
-            fail_silently=False,
-        )
+        send_contact_us_email.delay(self.object.subject, self.object.email_from)
 
         return response
 

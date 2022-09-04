@@ -146,3 +146,5 @@ AUTH_USER_MODEL = 'accounts.User'
 # TODO move to env
 HTTP_SCHEMA = 'http'
 DOMAIN = 'localhost:8000'
+
+CELERY_BROKER_URL = 'amqp://localhost'
