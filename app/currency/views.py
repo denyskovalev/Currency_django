@@ -2,7 +2,6 @@
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views import generic
-from django.core.mail import send_mail
 
 from currency.resources import RateResource
 from currency.models import Rate, ContactUs, Source

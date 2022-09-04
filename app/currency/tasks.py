@@ -5,14 +5,6 @@ from django.conf import settings
 
 
 @shared_task
-def slow_func():
-    from time import sleep
-    print('START')
-    sleep(5)
-    print('END')
-
-
-@shared_task
 def send_contact_us_email(subject, from_email):
     email_subject = 'ContactUs from Currency Project'
     body = f'''
