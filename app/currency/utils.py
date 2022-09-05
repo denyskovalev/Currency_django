@@ -1,6 +1,16 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+
 # Create utils
+
+
+# Utils for Round numbers to normal mode
+from decimal import Decimal
+
+
+def to_decimal(value: str, precision: int = 4) -> int:
+    return round(Decimal(value), precision)
+
 
 # Utils for middleware
 from django.http import JsonResponse

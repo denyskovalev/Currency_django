@@ -4,8 +4,9 @@ from currency.model_choices import CurrencyTypes
 
 class Source(models.Model):
 
-    source_name = models.CharField(max_length=64)
+    source_name = models.CharField(max_length=16, unique=True)
     source_url = models.URLField()
+    code_name = models.CharField(max_length=16, unique=True, default='')
     created = models.DateTimeField(auto_now_add=True)
 
 
