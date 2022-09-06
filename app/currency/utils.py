@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from django.http import JsonResponse
 
 # Create utils
 
@@ -13,7 +13,6 @@ def to_decimal(value: str, precision: int = 4) -> int:
 
 
 # Utils for middleware
-from django.http import JsonResponse
 
 
 def get_client_ip(request):
