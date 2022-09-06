@@ -3,15 +3,26 @@
 {% block title %}Home{% endblock title %}
 
 {% block main_content %}
-    <div>Currency Exchange Project</div>
-    <div>
-        Rate list: <a href="{% url 'currency:rate_list' %}">Click here</a>
-        Rate count: {{ rate_count }}
+    <div class="jumbotron text-center">
+      <h1>Currency exchange project</h1>
+      <p>To easily view the foreign exchange market</p>
     </div>
-    <div>
-        Contact us: <a href="{% url 'currency:contact_us' %}">Click here</a>
-    </div>
-    <div>
-        Source list: <a href="{% url 'currency:source_show' %}">Click here</a>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <h3>Source</h3>
+          <p>Source list: <a href="{% url 'currency:source_show' %}">Click here</a></p>
+        </div>
+        <div class="col-sm-4">
+          <h3>Rate</h3>
+          <p>Rate list: <a href="{% url 'currency:rate_list' %}">Click here</a></p>
+          <p>Rate count: {{ rate_count }}</p>
+        </div>
+        <div class="col-sm-4">
+          <h3>Contact us</h3>
+          <p>Contact us view: <a href="{% url 'currency:contact_us' %}">Click here</a></p>
+        </div>
+      </div>
     </div>
 {% endblock main_content %}

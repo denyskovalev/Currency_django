@@ -58,16 +58,16 @@ class RateDetailsView(generic.DetailView):
     template_name = 'rate_details.html'
 
 
-# Contact classes
-class ContactUsView(generic.ListView):
-    queryset = ContactUs.objects.all()
-    template_name = 'contact_us.html'
-
-
 # Source classes
 class SourceShowView(generic.ListView):
     queryset = Source.objects.all()
     template_name = 'source_show.html'
+
+
+# Contact classes
+class ContactUsView(generic.ListView):
+    queryset = ContactUs.objects.all()
+    template_name = 'contact_us.html'
 
 
 class ContactUsCreateView(generic.CreateView):
