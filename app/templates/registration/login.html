@@ -1,15 +1,31 @@
 
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Login page{% endblock title %}
 
 {% block main_content %}
-    User login
 
-    <form method="post">
+<div class="container mt-3 " style="width: 40%; font-size: 14pk">
+    <form method="post" enctype="multipart/form-data" class="card p-3 mt-5" autocomplete="off">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Send</button>
-        <a href="{% url 'password_reset' %}">Forgot password?</a>
+        <h3>Login now</h3>
+        <div class="row">
+            <div>
+                {{ form.username|as_crispy_field }}
+            </div>
+            <div>
+                {{ form.password|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-success">Send</button>
+            </div>
+            <div class="col-md-auto">
+                <a href="{% url 'password_reset' %}" class="btn btn-info">Forgot password?</a>
+            </div>
+        </div>
     </form>
+</div>
 {% endblock main_content %}

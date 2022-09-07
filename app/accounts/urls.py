@@ -1,6 +1,8 @@
 
 from django.urls import path
 from accounts import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 app_name = 'accounts'
 
@@ -11,3 +13,5 @@ urlpatterns = [
     path('my-profile/', views.UserProfileView.as_view(), name='my_profile'),
 
 ]
+
+urlpatterns.extend(static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))

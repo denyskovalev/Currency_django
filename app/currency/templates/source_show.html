@@ -4,26 +4,43 @@
 {% block title %}Source list{% endblock title %}
 
 {% block main_content %}
-    <table>
-        <tr>
+    <div class="container">
+      <h2>Contact Us message!</h2>
+      <p>Test table for messages</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
             <th>ID:</th>
             <th>Source name:</th>
             <th>Source url:</th>
             <th>
-                <a href="{% url 'currency:source_create' %}">Create a new source</a>
+                <a type="button" class="btn btn-link"
+                   href="{% url 'currency:source_create' %}">Create a new source</a>
             </th>
-        </tr>
-        {% for source in source_list %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for source in source_list %}
             <tr>
                 <td>{{ source.id }}</td>
-                <td>{{ source.source_name }}</td>
+                <td>
+                    {{ source.source_name }}
+                    {% if source.avatar %}
+                        <img src="{{ source.avatar.url }}" height="30" width="30">
+                    {% endif %}
+                </td>
                 <td>{{ source.source_url }}</td>
                 <td>
-                    <a href="{% url 'currency:source_details' source.id %}">Show details</a>
-                    <a href="{% url 'currency:source_update' source.id %}">Change source</a>
-                    <a href="{% url 'currency:source_delete' source.id %}">Delete source</a>
+                    <a type="button" class="btn btn-link"
+                       href="{% url 'currency:source_details' source.id %}">Show details</a>
+                    <a type="button" class="btn btn-link"
+                       href="{% url 'currency:source_update' source.id %}">Change source</a>
+                    <a type="button" class="btn btn-link"
+                       href="{% url 'currency:source_delete' source.id %}">Delete source</a>
                 </td>
             </tr>
-        {% endfor %}
-    </table>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 {% endblock main_content %}

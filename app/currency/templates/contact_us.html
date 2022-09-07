@@ -4,22 +4,30 @@
 {% block title %}Contact Us{% endblock title %}
 
 {% block main_content %}
-    <table class="table">
-        <tr>
-            <th scope="col">ID:</th>
-            <th scope="col">Email from:</th>
-            <th scope="col">Email to:</th>
-            <th scope="col">Subject:</th>
-            <th scope="col">Date message:</th>
-        </tr>
-        {% for contact in contactus_list %}
-            <tr>
-                <th  scope="row">{{ contact.id }}</th>
-                <td>{{ contact.email_from }}</td>
-                <td>{{ contact.email_to }}</td>
-                <td>{{ contact.subject }}</td>
-                <td>{{ contact.date_message }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div class="container">
+      <h2>Contact Us message!</h2>
+      <p>Test table for messages</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID:</th>
+            <th>Email from:</th>
+            <th>Email to:</th>
+            <th>Subject:</th>
+            <th>Date message:</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contact in contactus_list %}
+                <tr>
+                    <td>{{ contact.id }}</td>
+                    <td>{{ contact.email_from }}</td>
+                    <td>{{ contact.email_to }}</td>
+                    <td>{{ contact.subject }}</td>
+                    <td>{{ contact.date_message }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
 {% endblock main_content %}

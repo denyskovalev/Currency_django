@@ -1,15 +1,33 @@
 
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Sign up!{% endblock title %}
 
 {% block main_content %}
-    Sign up
 
-    <form method="post">
+<div class="container mt-3 " style="width: 40%; font-size: 14pk">
+    <form method="post" enctype="multipart/form-data" class="card p-3 mt-5" autocomplete="off">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="reset">Reset</button>
-        <button type="submit">Send</button>
+        <div class="row">
+            <div>
+                {{ form.email|as_crispy_field }}
+            </div>
+            <div>
+                {{ form.password1|as_crispy_field }}
+            </div>
+            <div>
+                {{ form.password2|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-success">Send</button>
+            </div>
+            <div class="col-md-auto">
+                <button type="reset" class="btn btn-danger">Reset</button>
+            </div>
+        </div>
     </form>
+</div>
 {% endblock main_content %}

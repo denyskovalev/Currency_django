@@ -1,15 +1,34 @@
 
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Rate create{% endblock title %}
 
 {% block main_content %}
-    Rate create
-
-    <form method="post">
+<div class="container mt-3 " style="width: 40%; font-size: 14pk">
+    <form method="post" class="card p-3 mt-5" autocomplete="off">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="reset">Reset</button>
-        <button type="submit">Send</button>
+        <div class="row">
+            <div class="col-6">
+                {{ form.base_currency_type|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.currency_type|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                {{ form.sale|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.buy|as_crispy_field }}
+            </div>
+        </div>
+        {{ form.source|as_crispy_field }}
+        <div>
+            <button type="submit" class="btn btn-success">Send</button>
+            <button type="reset" class="btn btn-info">reset</button>
+        </div>
     </form>
+</div>
 {% endblock main_content %}

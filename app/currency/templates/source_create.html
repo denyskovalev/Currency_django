@@ -1,15 +1,19 @@
 
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Source create{% endblock title %}
 
 {% block main_content %}
-    Create new source
-
-    <form method="post">
+<div class="container mt-3"  style="width: 40%; font-size: 14pk">
+    <form method="post" enctype="multipart/form-data" class="card p-3 mt-5" autocomplete="off">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="reset">Reset</button>
-        <button type="submit">Send</button>
+        <div class="row">
+            {{ form.source_name|as_crispy_field }}
+            {{ form.source_url|as_crispy_field }}
+            {{ form.avatar|as_crispy_field }}
+        </div>
+        <button type="submit" class="btn btn-success">Send</button>
     </form>
+</div>
 {% endblock main_content %}

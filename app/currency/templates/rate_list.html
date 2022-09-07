@@ -1,36 +1,56 @@
 
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Rate list{% endblock title %}
 
 {% block main_content %}
-    <table>
-        <tr>
-            <th scope="col">ID:</th>
-            <th scope="col">Currency from:</th>
-            <th scope="col">Currency to:</th>
-            <th scope="col">Sale:</th>
-            <th scope="col">Buy:</th>
-            <th scope="col">Source:</th>
-            <th scope="col">
-                <a href="{% url 'currency:rate_create' %}" >Create new</a>
-                <a href="{% url 'currency:rate_download' %}">Download .csv</a>
+    <div class="container">
+      <h2>Contact Us message!</h2>
+      <p>Currency views</p>
+      <a type="button" class="btn btn-success"
+         href="{% url 'currency:rate_download' %}">Download .csv</a>
+      <img src="{% static 'img/python.png' %}" height="25" width="25">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID:</th>
+            <th>Currency from:</th>
+            <th>Currency to:</th>
+            <th>Sale:</th>
+            <th>Buy:</th>
+            <th>Source:</th>
+            <th>
+                <a type="button" class="btn btn-link"
+                   href="{% url 'currency:rate_create' %}" >Create new</a>
             </th>
-        </tr>
-        {% for rate in rate_list %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for rate in rate_list %}
             <tr>
-                <th  scope="row">{{ rate.id }}</th>
+                <td>{{ rate.id }}</td>
                 <td>{{ rate.get_base_currency_type_display }}</td>
                 <td>{{ rate.get_currency_type_display }}</td>
                 <td>{{ rate.sale }}</td>
                 <td>{{ rate.buy }}</td>
-                <td>{{ rate.source.source_name }}</td>
                 <td>
-                    <a href="{% url 'currency:rate_details' rate.id %}">View details</a>
-                    <a href="{% url 'currency:rate_update' rate.id %}">Edit</a>
-                    <a href="{% url 'currency:rate_delete' rate.id %}">Delete</a>
+                    {{ rate.source.source_name }}
+                    {% if rate.source.avatar %}
+                        <img src="{{ rate.source.avatar.url }}" height="30" width="30">
+                    {% endif %}
+                </td>
+                <td>
+                    <a type="button" class="btn btn-link"
+                       href="{% url 'currency:rate_details' rate.id %}">View details</a>
+                    <a type="button" class="btn btn-link"
+                       href="{% url 'currency:rate_update' rate.id %}">Edit</a>
+                    <a type="button" class="btn btn-link"
+                       href="{% url 'currency:rate_delete' rate.id %}">Delete</a>
                 </td>
             </tr>
-        {% endfor %}
-    </table>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 {% endblock main_content %}

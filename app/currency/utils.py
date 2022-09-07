@@ -1,9 +1,18 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import JsonResponse
 
 # Create utils
 
+
+# Utils for Round numbers to normal mode
+from decimal import Decimal
+
+
+def to_decimal(value: str, precision: int = 4) -> int:
+    return round(Decimal(value), precision)
+
+
 # Utils for middleware
-from django.http import JsonResponse
 
 
 def get_client_ip(request):
@@ -25,3 +34,8 @@ class IsSuperuserRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
         return JsonResponse(
             {'message': 'Only superuser can update/delete Rate`s!'}
         )
+
+
+# Utils for avatar source create
+def source_avatar(instance, filename):
+    return 'bank_icons/{0}/{1}'.format(instance.code_name, filename)
