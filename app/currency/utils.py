@@ -34,3 +34,8 @@ class IsSuperuserRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
         return JsonResponse(
             {'message': 'Only superuser can update/delete Rate`s!'}
         )
+
+
+# Utils for avatar source create
+def source_avatar(instance, filename):
+    return 'bank_icons/{0}/{1}'.format(instance.code_name, filename)

@@ -1,3 +1,5 @@
+
+from currency.utils import source_avatar
 from django.db import models
 from currency.model_choices import CurrencyTypes, Sources
 
@@ -10,6 +12,7 @@ class Source(models.Model):
     )
     source_url = models.URLField()
     code_name = models.CharField(max_length=16, unique=True, default='')
+    avatar = models.FileField(upload_to=source_avatar)
     created = models.DateTimeField(auto_now_add=True)
 
 

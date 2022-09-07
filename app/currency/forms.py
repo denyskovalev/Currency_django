@@ -21,4 +21,5 @@ class SourceForm(forms.ModelForm):
         fields = (
             'source_name',
             'source_url',
+            'avatar',
         )

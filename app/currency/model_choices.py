@@ -13,4 +13,4 @@ class CurrencyTypes(models.TextChoices):
 
 class Sources(models.TextChoices):
     SOURCE_PRIVATBANK = consts.CODE_NAME_PRIVATBANK, 'Private Bank'
-    CODE_NAME_PRIVATBANK = consts.CODE_NAME_MONOBANK, 'Monobank =)'
+    CODE_NAME_PRIVATBANK = consts.CODE_NAME_MONOBANK, 'Monobank'
