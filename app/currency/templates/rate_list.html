@@ -1,5 +1,6 @@
 
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Rate list{% endblock title %}
 
@@ -9,6 +10,7 @@
       <p>Currency views</p>
       <a type="button" class="btn btn-success"
          href="{% url 'currency:rate_download' %}">Download .csv</a>
+      <img src="{% static 'img/python.png' %}" height="25" width="25">
       <table class="table table-bordered">
         <thead>
           <tr>

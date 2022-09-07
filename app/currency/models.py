@@ -1,10 +1,13 @@
 from django.db import models
-from currency.model_choices import CurrencyTypes
+from currency.model_choices import CurrencyTypes, Sources
 
 
 class Source(models.Model):
 
-    source_name = models.CharField(max_length=16, unique=True)
+    source_name = models.CharField(
+        max_length=16, unique=True,
+        choices=Sources.choices
+    )
     source_url = models.URLField()
     code_name = models.CharField(max_length=16, unique=True, default='')
     created = models.DateTimeField(auto_now_add=True)

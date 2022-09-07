@@ -1,14 +1,23 @@
-
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}My profile{% endblock title %}
 
 {% block main_content %}
-    Update profile
 
-    <form method="post">
+<div class="container mt-3 " style="width: 40%; font-size: 14pk">
+    <form method="post" enctype="multipart/form-data" class="card p-3 mt-5" autocomplete="off">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Send</button>
+        <div class="row">
+            <div class="col-6">
+                {{ form.first_name|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.last_name|as_crispy_field }}
+            </div>
+        </div>
+        {{ form.avatar|as_crispy_field }}
+        <button type="submit" class="btn btn-success">Send</button>
     </form>
+</div>
 {% endblock main_content %}
