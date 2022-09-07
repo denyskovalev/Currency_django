@@ -23,7 +23,12 @@
           {% for source in source_list %}
             <tr>
                 <td>{{ source.id }}</td>
-                <td>{{ source.source_name }}</td>
+                <td>
+                    {{ source.source_name }}
+                    {% if source.avatar %}
+                        <img src="{{ source.avatar.url }}" height="30" width="30">
+                    {% endif %}
+                </td>
                 <td>{{ source.source_url }}</td>
                 <td>
                     <a type="button" class="btn btn-link"

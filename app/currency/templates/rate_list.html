@@ -34,7 +34,12 @@
                 <td>{{ rate.get_currency_type_display }}</td>
                 <td>{{ rate.sale }}</td>
                 <td>{{ rate.buy }}</td>
-                <td>{{ rate.source.source_name }}</td>
+                <td>
+                    {{ rate.source.source_name }}
+                    {% if rate.source.avatar %}
+                        <img src="{{ rate.source.avatar.url }}" height="30" width="30">
+                    {% endif %}
+                </td>
                 <td>
                     <a type="button" class="btn btn-link"
                        href="{% url 'currency:rate_details' rate.id %}">View details</a>
