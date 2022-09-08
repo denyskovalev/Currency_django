@@ -1,5 +1,6 @@
 
 import requests
+from bs4 import BeautifulSoup
 
 from celery import shared_task
 from django.core.mail import send_mail
@@ -117,8 +118,8 @@ def parse_monobank():
 
         try:
             latest_rate = Rate.objects.filter(
-                base_currency_type=base_currency_type,
-                currency_type=currency_type,
+                base_currency_type=currency_type_mapper[str(base_currency_type)],
+                currency_type=currency_type_mapper[str(currency_type)],
                 source=source,
             ).latest('created')
         except Rate.DoesNotExist:
@@ -130,6 +131,130 @@ def parse_monobank():
             Rate.objects.create(
                 base_currency_type=currency_type_mapper[str(base_currency_type)],
                 currency_type=currency_type_mapper[str(currency_type)],
+                sale=sale,
+                buy=buy,
+                source=source,
+            )
+
+
+# Parser Vkurse
+@shared_task
+def parse_vkurse():
+    from currency.models import Rate, Source
+    url = 'http://vkurse.dp.ua/course.json'
+
+    response = requests.get(url)
+    response.raise_for_status()  # raise error if not ok
+
+    response_data = response.json()
+
+    currency_type_mapper = {
+        'Dollar': mch.CurrencyTypes.CURRENCY_TYPE_USD,
+        'Euro': mch.CurrencyTypes.CURRENCY_TYPE_EUR,
+    }
+
+    source = Source.objects.get_or_create(
+        code_name=consts.CODE_NAME_VKURSE,
+        defaults={'source_url': url, 'source_name': consts.CODE_NAME_VKURSE},
+    )[0]
+
+    for rate_data in response_data:
+        base_currency_type = mch.CurrencyTypes.CURRENCY_TYPE_UAH
+        currency_type = rate_data
+
+        # Skip unsupported Currencies
+        if currency_type not in currency_type_mapper:
+            continue
+
+        # Convert private bank currencies into our currency type
+        try:
+            sale = to_decimal(response_data[rate_data]['sale'])
+            buy = to_decimal(response_data[rate_data]['buy'])
+        except KeyError:
+            sale = to_decimal(response_data[rate_data]['sale'])
+            buy = to_decimal(response_data[rate_data]['buy'])
+
+        try:
+            latest_rate = Rate.objects.filter(
+                base_currency_type=base_currency_type,
+                currency_type=currency_type_mapper[currency_type],
+                source=source,
+            ).latest('created')
+        except Rate.DoesNotExist:
+            latest_rate = None
+
+        if latest_rate is None or \
+                latest_rate.sale != sale or \
+                latest_rate.buy != buy:
+            Rate.objects.create(
+                base_currency_type=base_currency_type,
+                currency_type=currency_type_mapper[currency_type],
+                sale=sale,
+                buy=buy,
+                source=source,
+            )
+
+
+# Parse oshadbank
+@shared_task
+def parse_oschadbank():
+    # bs4
+    from currency.models import Rate, Source
+    url = 'https://www.oschadbank.ua/currency-rate'
+    headers = {
+        'User-Agent':
+            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+    }
+    full_page = requests.get(url, headers)
+    soup = BeautifulSoup(full_page.content, 'html.parser')
+    convert = list(soup.findAll('tr', {'class': 'heading-block-currency-rate__table-row'}))
+
+    currency_type_mapper = {
+        'USD': mch.CurrencyTypes.CURRENCY_TYPE_USD,
+        'EUR': mch.CurrencyTypes.CURRENCY_TYPE_EUR,
+        'GBP': mch.CurrencyTypes.CURRENCY_TYPE_GBP,
+    }
+
+    source = Source.objects.get_or_create(
+        code_name=consts.CODE_NAME_OSCHADBANK,
+        defaults={'source_url': url, 'source_name': consts.CODE_NAME_OSCHADBANK},
+    )[0]
+
+    # select rows with currency info and create rate
+    for row in range(len(convert)):
+
+        data_soup = convert[row]
+        data_soup_list = list(
+            data_soup.findAll('span', {'class': 'heading-block-currency-rate__table-txt body-regular'})
+        )
+
+        base_currency_type = mch.CurrencyTypes.CURRENCY_TYPE_UAH
+        currency_type = data_soup_list[1].text
+
+        # Skip unsupported Currencies
+        if currency_type not in currency_type_mapper:
+            continue
+
+        sale = to_decimal(data_soup_list[4].text)
+        buy = to_decimal(data_soup_list[3].text)
+
+        try:
+            latest_rate = Rate.objects.filter(
+                base_currency_type=base_currency_type,
+                currency_type=currency_type,
+                source=source,
+            ).latest('created')
+        except Rate.DoesNotExist:
+            latest_rate = None
+
+        if latest_rate is None or \
+                latest_rate.sale != sale or \
+                latest_rate.buy != buy:
+
+
+            Rate.objects.create(
+                base_currency_type=base_currency_type,
+                currency_type=currency_type,
                 sale=sale,
                 buy=buy,
                 source=source,
