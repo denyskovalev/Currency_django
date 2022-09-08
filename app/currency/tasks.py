@@ -251,6 +251,72 @@ def parse_oschadbank():
                 latest_rate.sale != sale or \
                 latest_rate.buy != buy:
 
+            # TODO test this
+            try:
+                latest_rate.delete()
+            except latest_rate is None:
+                pass
+
+            Rate.objects.create(
+                base_currency_type=base_currency_type,
+                currency_type=currency_type,
+                sale=sale,
+                buy=buy,
+                source=source,
+            )
+
+
+# Parse raiffaisen
+@shared_task
+def parse_finance_ua():
+    from currency.models import Rate, Source
+    # bs4
+    url = 'https://finance.ua/ua/currency'
+    headers = {
+        'User-Agent':
+            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+    }
+    full_page = requests.get(url, headers)
+    soup = BeautifulSoup(full_page.content, 'html.parser')
+    convert = list(soup.findAll('tr', {'class': 'major'}))
+
+    currency_type_mapper = {
+        'USD': mch.CurrencyTypes.CURRENCY_TYPE_USD,
+        'EUR': mch.CurrencyTypes.CURRENCY_TYPE_EUR,
+        'GBP': mch.CurrencyTypes.CURRENCY_TYPE_GBP,
+    }
+
+    source = Source.objects.get_or_create(
+        code_name=consts.CODE_NAME_FINANCE_UA,
+        defaults={'source_url': url, 'source_name': consts.CODE_NAME_FINANCE_UA},
+    )[0]
+
+    for row in range(len(convert)):
+
+        data_soup = convert[row]
+        data_soup_list = data_soup.text.split()
+
+        base_currency_type = mch.CurrencyTypes.CURRENCY_TYPE_UAH
+        currency_type = data_soup_list[0]
+
+        if currency_type not in currency_type_mapper:
+            continue
+
+        sale = to_decimal(data_soup_list[1])
+        buy = to_decimal(data_soup_list[3])
+
+        try:
+            latest_rate = Rate.objects.filter(
+                base_currency_type=base_currency_type,
+                currency_type=currency_type,
+                source=source,
+            ).latest('created')
+        except Rate.DoesNotExist:
+            latest_rate = None
+
+        if latest_rate is None or \
+                latest_rate.sale != sale or \
+                latest_rate.buy != buy:
 
             Rate.objects.create(
                 base_currency_type=base_currency_type,
