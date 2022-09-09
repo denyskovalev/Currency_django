@@ -23,3 +23,6 @@ shell_plus:
 build_migrate: make_migrations \
 	migrate \
 	run
+
+flake8:
+	flake8 app/

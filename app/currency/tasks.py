@@ -260,7 +260,7 @@ def parse_oschadbank():
             )
 
 
-# Parse raiffaisen
+# Parse Finance UA
 @shared_task
 def parse_finance_ua():
     from currency.models import Rate, Source
@@ -321,6 +321,8 @@ def parse_finance_ua():
             )
 
 
+# Parse Ukrsibbank
+@shared_task()
 def parse_ukrsibbank():
     # bs4
     from currency.models import Rate, Source
