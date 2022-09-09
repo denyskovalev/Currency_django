@@ -5,8 +5,8 @@
 
 {% block main_content %}
     <div class="container">
-      <h2>Contact Us message!</h2>
-      <p>Test table for messages</p>
+      <h2>Rate list!</h2>
+      <p>Test table for lists</p>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -18,7 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for contact in contactus_list %}
+          {% for contact in contactus_lists %}
                 <tr>
                     <td>{{ contact.id }}</td>
                     <td>{{ contact.email_from }}</td>

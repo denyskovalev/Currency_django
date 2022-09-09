@@ -6,6 +6,8 @@ django-import-export==2.8.0
 django-crispy-forms==1.14.0
 crispy-bootstrap5==0.6
 
+beautifulsoup4==4.11.1
+
 # dev
 django-debug-toolbar==3.5.0
 django-admin-rangefilter==0.8.6
