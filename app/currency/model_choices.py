@@ -17,3 +17,4 @@ class Sources(models.TextChoices):
     SOURCE_VKURSE = consts.CODE_NAME_VKURSE, 'Vkurse'
     SOURCE_OSCHADBANK = consts.CODE_NAME_OSCHADBANK, 'Oschadbank'
     SOURCE_FINANCE_UA = consts.CODE_NAME_FINANCE_UA, 'Finance.ua'
+    SOURCE_UKRSIBBANK = consts.CODE_NAME_UKRSIBBANK, 'Ukrsibbank'

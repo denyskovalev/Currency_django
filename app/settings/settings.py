@@ -178,6 +178,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'currency.tasks.parse_finance_ua',
         'schedule': crontab(minute='*/2'),
     },
+    'parse_ukrsibbank': {
+        'task': 'currency.tasks.parse_ukrsibbank',
+        'schedule': crontab(minute='*/2'),
+    },
 }
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

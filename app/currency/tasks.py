@@ -251,12 +251,6 @@ def parse_oschadbank():
                 latest_rate.sale != sale or \
                 latest_rate.buy != buy:
 
-            # TODO test this
-            try:
-                latest_rate.delete()
-            except latest_rate is None:
-                pass
-
             Rate.objects.create(
                 base_currency_type=base_currency_type,
                 currency_type=currency_type,
@@ -304,6 +298,70 @@ def parse_finance_ua():
 
         sale = to_decimal(data_soup_list[1])
         buy = to_decimal(data_soup_list[3])
+
+        try:
+            latest_rate = Rate.objects.filter(
+                base_currency_type=base_currency_type,
+                currency_type=currency_type,
+                source=source,
+            ).latest('created')
+        except Rate.DoesNotExist:
+            latest_rate = None
+
+        if latest_rate is None or \
+                latest_rate.sale != sale or \
+                latest_rate.buy != buy:
+
+            Rate.objects.create(
+                base_currency_type=base_currency_type,
+                currency_type=currency_type,
+                sale=sale,
+                buy=buy,
+                source=source,
+            )
+
+
+def parse_ukrsibbank():
+    # bs4
+    from currency.models import Rate, Source
+    url = 'https://my.ukrsibbank.com/ru/personal/operations/currency_exchange/'
+    headers = {
+        'User-Agent':
+            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+    }
+    full_page = requests.get(url, headers)
+    soup = BeautifulSoup(full_page.content, 'html.parser')
+    convert = list(soup.find('table', {'class': 'currency__table'}))
+    convert_list = convert[3].findAll('tr', {'class': ''})
+
+    currency_type_mapper = {
+        'USD, доллар США': mch.CurrencyTypes.CURRENCY_TYPE_USD,
+        'EUR, евро': mch.CurrencyTypes.CURRENCY_TYPE_EUR,
+        'GBP, фунт стерлингов': mch.CurrencyTypes.CURRENCY_TYPE_GBP,
+    }
+
+    source = Source.objects.get_or_create(
+        code_name=consts.CODE_NAME_UKRSIBBANK,
+        defaults={'source_url': url, 'source_name': consts.CODE_NAME_UKRSIBBANK},
+    )[0]
+
+    # select rows with currency info and create rate
+    for row in range(len(convert_list)):
+
+        data_soup = convert_list[row]
+        data_soup_list = list(data_soup.findAll('td', {'class': ''}))
+
+        base_currency_type = mch.CurrencyTypes.CURRENCY_TYPE_UAH
+        currency_type = data_soup_list[0].text
+
+        # Skip unsupported Currencies
+        if currency_type not in currency_type_mapper:
+            continue
+        else:
+            currency_type = currency_type_mapper[currency_type]
+
+        sale = to_decimal(data_soup_list[1].text[7:])
+        buy = to_decimal(data_soup_list[2].text[7:])
 
         try:
             latest_rate = Rate.objects.filter(
