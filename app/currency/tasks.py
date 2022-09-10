@@ -290,6 +290,9 @@ def parse_finance_ua():
         data_soup = convert[row]
         data_soup_list = data_soup.text.split()
 
+        if len(data_soup_list) < 3:
+            continue
+
         base_currency_type = mch.CurrencyTypes.CURRENCY_TYPE_UAH
         currency_type = data_soup_list[0]
 

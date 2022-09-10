@@ -25,6 +25,7 @@ class IndexView(generic.TemplateView):
 class RateListView(generic.ListView):
     queryset = Rate.objects.all().select_related('source')
     template_name = 'rate_list.html'
+    paginate_by = 7
 
 
 class RateCreateView(generic.CreateView):
