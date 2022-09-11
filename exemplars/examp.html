@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-
-    <title>Title</title>
-</head>
-
-<body>
-
-<p> Hello paragraph </p>
-
-</body>
-</html>
+    <div class="container mt-3">
+        <form method="post" class="card p-3 mt-5" autocomplete="off">
+            <h2>Filter:</h2>
+            <div class="row">
+                {{ filter.form.buy|as_crispy_field }}
+                {{ filter.form.sale|as_crispy_field }}
+                {{ filter.form.base_currency_type|as_crispy_field }}
+                {{ filter.form.currency_type|as_crispy_field }}
+                {{ filter.form.source|as_crispy_field }}
+                <label for="id-page_size"></label>
+                <input name="page_size" id="id-page_size"
+                       value="{{ page_size }}" placeholder="3..100" type="number">
+                <button type="submit">Filter</button>
+            </div>
+        </form>
+    </div>

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_extensions',
     'rangefilter',
+    'django_filters',
 
     'currency',
     'import_export',

@@ -2,6 +2,7 @@
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views import generic
+from django_filters.views import FilterView
 
 from currency.resources import RateResource
 from currency.models import Rate, ContactUs, Source
@@ -9,6 +10,7 @@ from currency.forms import RateForm, SourceForm
 from currency.tasks import send_contact_us_email
 
 from currency.utils import IsSuperuserRequiredMixin
+from currency.filters import RateFilter
 
 
 # Index class
@@ -22,9 +24,32 @@ class IndexView(generic.TemplateView):
 
 
 # Rate list classes
-class RateListView(generic.ListView):
+class RateListView(FilterView):
     queryset = Rate.objects.all().select_related('source')
     template_name = 'rate_list.html'
+    paginate_by = 7
+    filterset_class = RateFilter
+
+    def get_context_data(self, *args, **kwargs):
+        context: dict = super().get_context_data(*args, **kwargs)
+
+        # remove page param from query_string
+        filters_params = self.request.GET.copy()
+        if self.page_kwarg in filters_params:
+            del filters_params[self.page_kwarg]  # self.page_kwarg == 'page'
+
+        context['filters_params'] = filters_params.urlencode()
+        context['page_size'] = self.get_paginate_by()
+
+        return context
+
+    def get_paginate_by(self, queryset=None):
+        if 'page_size' in self.request.GET:
+            paginate_by = self.request.GET['page_size']
+        else:
+            paginate_by = self.paginate_by
+
+        return paginate_by
 
 
 class RateCreateView(generic.CreateView):
