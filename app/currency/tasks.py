@@ -167,12 +167,8 @@ def parse_vkurse():
             continue
 
         # Convert private bank currencies into our currency type
-        try:
-            sale = to_decimal(response_data[rate_data]['sale'])
-            buy = to_decimal(response_data[rate_data]['buy'])
-        except KeyError:
-            sale = to_decimal(response_data[rate_data]['sale'])
-            buy = to_decimal(response_data[rate_data]['buy'])
+        sale = to_decimal(response_data[rate_data]['sale'])
+        buy = to_decimal(response_data[rate_data]['buy'])
 
         try:
             latest_rate = Rate.objects.filter(
