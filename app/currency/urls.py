@@ -16,6 +16,9 @@ urlpatterns = [
     path('rate/delete/<int:pk>/', views.RateDeleteView.as_view(), name='rate_delete'),
     path('rate/details/<int:pk>/', views.RateDetailsView.as_view(), name='rate_details'),
 
+    # Rest example
+    # path('api/example/', views.api_get_rate_list, name='api_example'),
+
     # Contact us
     path('contact-us/', views.ContactUsView.as_view(), name='contact_us'),
     path('contact-us/create/', views.ContactUsCreateView.as_view(), name='contact_us_create'),

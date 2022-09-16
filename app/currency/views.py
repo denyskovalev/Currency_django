@@ -1,5 +1,6 @@
+import json
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse_lazy
 from django.views import generic
 from django_filters.views import FilterView
@@ -135,8 +136,25 @@ class SourceDeleteView(generic.DeleteView):
 
 
 class SourceDetailsView(generic.DetailView):
+    import json
+
     queryset = Source.objects.all()
     template_name = 'source_details.html'
+
+
+# Rest example
+# def api_get_rate_list(request):
+#     queryset = Rate.objects.all()
+#     response_content = []
+#
+#     for rate in queryset:
+#         response_content.append({
+#             'id': rate.id,
+#             'buy': float(rate.buy),
+#             'sale': float(rate.sale),
+#         })
+#     # return HttpResponse(json.dumps(response_content), content_type='application/json')
+#     return JsonResponse(response_content, safe=False)
 
 # Source functions
 # def source_show(request):
