@@ -10,6 +10,8 @@ router.register('rates', views.RateViewSet, basename='rate')
 
 urlpatterns = [
 
+    path('sources/', views.SourceListView.as_view(), name='sources')
+    # for rate CRUD
     # path('rates/', views.RatesView.as_view(), name='rates'),
     # path('rates/<int:pk>/', views.RateDetailsView.as_view(), name='rates-details'),
 

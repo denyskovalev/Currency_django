@@ -1,8 +1,8 @@
-
+from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 
-from currency.models import Rate
-from api.serializers import RateSerializer
+from currency.models import Rate, Source, ContactUs
+from api.serializers import RateSerializer, SourceSerializer, ContactUsSerializer
 
 
 # # Rate CRUD
@@ -18,3 +18,8 @@ from api.serializers import RateSerializer
 class RateViewSet(ModelViewSet):
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
+
+
+class SourceListView(generics.ListAPIView):
+    queryset = Source.objects.all()
+    serializer_class = SourceSerializer

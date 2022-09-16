@@ -1,9 +1,10 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 
-from currency.models import Rate
+from currency.tasks import send_contact_us_email
+from currency.models import Rate, Source, ContactUs
 
 
-class RateSerializer(ModelSerializer):
+class RateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rate
         fields = (
@@ -14,4 +15,14 @@ class RateSerializer(ModelSerializer):
             'sale',
             'created',
             'source',
+        )
+
+
+class SourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Source
+        fields = (
+            'source_name',
+            'source_url',
+            'created',
         )
