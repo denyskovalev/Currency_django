@@ -26,3 +26,15 @@ class SourceSerializer(serializers.ModelSerializer):
             'source_url',
             'created',
         )
+
+
+class ContactUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactUs
+        fields = (
+            'email_from',
+            'email_to',
+            'subject',
+            'message',
+            'date_message',
+        )
