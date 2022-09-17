@@ -1,6 +1,5 @@
-import json
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views import generic
 from django_filters.views import FilterView
@@ -136,7 +135,6 @@ class SourceDeleteView(generic.DeleteView):
 
 
 class SourceDetailsView(generic.DetailView):
-    import json
 
     queryset = Source.objects.all()
     template_name = 'source_details.html'

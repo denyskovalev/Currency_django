@@ -1,6 +1,5 @@
+
 from rest_framework import generics
-from rest_framework.exceptions import ValidationError
-from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from currency.tasks import send_contact_us_email
@@ -29,9 +28,10 @@ class SourceListView(generics.ListAPIView):
 
 
 class ContactUsViewSet(ModelViewSet):
+
     queryset = ContactUs.objects.all()
     serializer_class = ContactUsSerializer
-    
+
     def create(self, request, *args, **kwargs):
         send_contact_us_email.delay(request.data['subject'], request.data['email_from'])
         return super(ContactUsViewSet, self).create(request, *args, **kwargs)

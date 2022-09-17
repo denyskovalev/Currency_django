@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from currency.tasks import send_contact_us_email
 from currency.models import Rate, Source, ContactUs
 
 
