@@ -12,6 +12,7 @@ beautifulsoup4==4.11.1
 django-debug-toolbar==3.5.0
 django-admin-rangefilter==0.8.6
 django-filter==22.1
+djangorestframework==3.13.1
 
 # flake8
 flake8==4.0.1
