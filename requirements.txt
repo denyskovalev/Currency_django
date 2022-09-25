@@ -22,6 +22,10 @@ flake8-debugger==4.1.2
 flake8-print==5.0.0
 flake8-builtins==1.5.3
 
+# pytest
+pytest==7.1.3
+pytest-django==4.5.2
+
 # 3d
 rabbitmq
 celery~=5.2.7
