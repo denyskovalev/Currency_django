@@ -1,4 +1,4 @@
-
+import rest_framework.filters
 from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 
@@ -49,7 +49,9 @@ class ContactUsViewSet(ModelViewSet):
     filter_backends = (
         filters.DjangoFilterBackend,
         rest_framework_filters.OrderingFilter,
+        rest_framework.filters.SearchFilter
     )
+    search_fields = ['email_from', 'email_to', 'subject']
     ordering_fields = ['id', 'email_from', 'email_to', 'date_message']
     throttle_classes = [AnonCurrencyThrottle]
 

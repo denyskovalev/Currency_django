@@ -19,10 +19,8 @@ class SourceFilter(django_filters.FilterSet):
     class Meta:
         model = Source
         fields = {
-            'email_from': ('exact', ),
-            'email_to': ('exact', ),
-            'subject': ('exact', ),
-            'date_message': ('gte', 'lte', 'gt', 'lt'),
+            'source_name': ('exact',),
+            'created': ('gte', 'lte', 'gt', 'lt'),
         }
 
 
@@ -30,6 +28,8 @@ class ContactUsFilter(django_filters.FilterSet):
     class Meta:
         model = ContactUs
         fields = {
-            'source_name': ('exact', ),
-            'created': ('gte', 'lte', 'gt', 'lt'),
+            'email_from': ('exact', ),
+            'email_to': ('exact', ),
+            'subject': ('exact', ),
+            'date_message': ('gte', 'lte', 'gt', 'lt'),
         }

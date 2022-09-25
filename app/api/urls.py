@@ -16,6 +16,7 @@ app_name = 'api'
 router = DefaultRouter()
 router.register('rates', views.RateViewSet, basename='rate')
 router.register('contact-uses', views.ContactUsViewSet, basename='contact-us')
+router.register('sources', views.ContactUsViewSet, basename='source')
 
 schema_view = get_schema_view(
    openapi.Info(
