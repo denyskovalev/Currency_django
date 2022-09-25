@@ -29,3 +29,6 @@ flake8:
 
 pytest:
 	pytest app/tests/
+
+show_urls:
+	$(manage_py) show_urls
