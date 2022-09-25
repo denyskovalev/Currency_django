@@ -26,3 +26,6 @@ build_migrate: make_migrations \
 
 flake8:
 	flake8 app/
+
+pytest:
+	pytest app/tests/

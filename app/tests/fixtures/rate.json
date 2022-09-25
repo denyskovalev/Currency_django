@@ -1,0 +1,38 @@
+[
+  {
+    "fields": {
+      "base_currency_type": "UAH",
+      "currency_type": "USD",
+      "sale": "41.8000",
+      "buy": "41.5000",
+      "source": 3,
+      "created": "2022-09-12T09:51:22.814Z"
+    },
+    "model": "currency.rate",
+    "pk": 294
+  },
+  {
+    "fields": {
+      "base_currency_type": "UAH",
+      "currency_type": "EUR",
+      "sale": "41.6000",
+      "buy": "41.0000",
+      "source": 3,
+      "created": "2022-09-12T09:51:22.887Z"
+    },
+    "model": "currency.rate",
+    "pk": 295
+  },
+  {
+    "fields": {
+      "base_currency_type": "UAH",
+      "currency_type": "USD",
+      "sale": "37.3134",
+      "buy": "36.5686",
+      "source": 1,
+      "created": "2022-09-12T09:51:22.991Z"
+    },
+    "model": "currency.rate",
+    "pk": 296
+  }
+]

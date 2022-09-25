@@ -1,0 +1,68 @@
+[
+  {
+    "model": "currency.source",
+    "pk": 1,
+    "fields": {
+      "source_name": "PrivatBank",
+      "source_url": "https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11",
+      "code_name": "PrivatBank",
+      "avatar": "bank_icons/PrivatBank/priv-logo1.png",
+      "created": "2022-09-07T20:43:17.817Z"
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 2,
+    "fields": {
+      "source_name": "Monobank",
+      "source_url": "https://api.monobank.ua/bank/currency",
+      "code_name": "Monobank",
+      "avatar": "bank_icons/Monobank/mono-2.jpeg",
+      "created": "2022-09-07T20:43:17.881Z"
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 3,
+    "fields": {
+      "source_name": "Vkurse",
+      "source_url": "http://vkurse.dp.ua/course.json",
+      "code_name": "Vkurse",
+      "avatar": "bank_icons/Vkurse/vkurse-1.jpeg",
+      "created": "2022-09-08T10:00:43.279Z"
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 4,
+    "fields": {
+      "source_name": "Oschadbank",
+      "source_url": "https://www.oschadbank.ua/currency-rate",
+      "code_name": "Oschadbank",
+      "avatar": "bank_icons/Oschadbank/oschad-1.jpeg",
+      "created": "2022-09-08T14:28:10.207Z"
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 5,
+    "fields": {
+      "source_name": "Finance.ua",
+      "source_url": "https://finance.ua/ua/currency",
+      "code_name": "Finance.ua",
+      "avatar": "bank_icons/Finance.ua/financeua-1.png",
+      "created": "2022-09-08T21:30:00.581Z"
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 6,
+    "fields": {
+      "source_name": "Ukrsibbank",
+      "source_url": "https://my.ukrsibbank.com/ru/personal/operations/currency_exchange/",
+      "code_name": "Ukrsibbank",
+      "avatar": "bank_icons/Ukrsibbank/ukrsibbank-1.jpeg",
+      "created": "2022-09-09T15:55:39.449Z"
+    }
+  }
+]
