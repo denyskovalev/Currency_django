@@ -43,10 +43,6 @@ def source_avatar(instance, filename):
 
 
 # Utils for parser archive private bank
-def get_current_day(date):
-    return date
-
-
 def get_previous_day(date):
     previous_day = date - datetime.timedelta(1)
     return previous_day

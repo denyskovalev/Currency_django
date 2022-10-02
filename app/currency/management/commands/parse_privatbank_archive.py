@@ -3,7 +3,7 @@ import datetime
 import requests
 from django.core.management.base import BaseCommand
 from currency.models import Rate, Source
-from currency.utils import get_previous_day, get_str_day, get_current_day, to_decimal
+from currency.utils import get_previous_day, get_str_day, to_decimal
 from currency import model_choices as mch
 from currency import consts
 from django.utils.timezone import make_aware
@@ -15,10 +15,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         # Set current day
-        current_day = get_current_day(datetime.datetime.now(tz=None))
+        base_date = datetime.date.today()
+        time = datetime.time(hour=0, minute=0, second=0, microsecond=0, tzinfo=None)
+        current_day = datetime.datetime.combine(base_date, time)
         # or this for test, 2014/03/31 last available day
         # current_day = get_current_day(datetime.datetime(
-        #     year=2014, month=4, day=2,
+        #     year=2014, month=4, day=1,
         #     hour=0, minute=0, second=0, microsecond=0, tzinfo=None))
 
         # Set mapper
@@ -65,7 +67,8 @@ class Command(BaseCommand):
 
                 # Skip unsupported Currencies
                 if currency_type not in currency_type_mapper or \
-                        base_currency_type not in currency_type_mapper:
+                        base_currency_type not in currency_type_mapper or \
+                        currency_type == base_currency_type:
                     continue
 
                 # Convert private bank currencies into our currency type
