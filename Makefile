@@ -32,3 +32,9 @@ pytest:
 
 show_urls:
 	$(manage_py) show_urls
+
+coverage:
+	pytest --cov=app app/tests/ --cov-report html && coverage report --fail-under=70.0000
+
+show_coverage:
+	python3 -c "import webbrowser; webbrowser.open('.pytest_cache/coverage/index.html')"

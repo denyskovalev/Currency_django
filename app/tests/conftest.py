@@ -1,6 +1,6 @@
 import pytest
 from django.core.management import call_command
-# from rest_framework.test import APIClient
+from rest_framework.test import APIClient
 
 
 @pytest.fixture(autouse=True, scope="function")
@@ -19,3 +19,8 @@ def load_fixtures(django_db_setup, django_db_blocker):
         )
         for fixture in fixtures:
             call_command('loaddata', f'app/tests/fixtures/{fixture}')
+
+
+@pytest.fixture
+def api_client():
+    return APIClient()
