@@ -2,6 +2,7 @@
 from currency.utils import source_avatar
 from django.db import models
 from currency.model_choices import CurrencyTypes, Sources
+from django.utils import timezone
 
 
 class Source(models.Model):
@@ -32,7 +33,7 @@ class Rate(models.Model):
     sale = models.DecimalField(max_digits=10, decimal_places=4)  # 999999.9999
     buy = models.DecimalField(max_digits=10, decimal_places=4)
     source = models.ForeignKey('currency.Source', on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(default=timezone.now)
 
 
 class ContactUs(models.Model):

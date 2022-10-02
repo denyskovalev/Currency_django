@@ -38,3 +38,6 @@ coverage:
 
 show_coverage:
 	python3 -c "import webbrowser; webbrowser.open('.pytest_cache/coverage/index.html')"
+
+parse_pb_archive:
+	$(manage_py) parse_privatbank_archive
