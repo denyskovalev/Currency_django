@@ -4,3 +4,5 @@ exclude =
     migrations,
     __pycache__,
     settings_test.py,
+    tasks.py,
+    parse_privatbank_archive.py,

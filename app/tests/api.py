@@ -24,7 +24,7 @@ def test_contactus_api_get(api_client):
     assert response.status_code == 200
 
 
-def test_contactus_api_post_valid(api_client ,mailoutbox):
+def test_contactus_api_post_valid(api_client, mailoutbox):
     response = api_client.post(reverse('api:contactus-list'), data={'subject': 'test1', 'email_from': 'test1'})
     assert response.status_code == 400  # errors
     assert response.json() == {
@@ -37,7 +37,7 @@ def test_contactus_api_post_valid(api_client ,mailoutbox):
 
 
 @pytest.mark.parametrize('email_from', ('exampleexample.com', '123123', 'WADADADAD'))
-def test_contactus_api_post_invalid_email(api_client ,email_from):
+def test_contactus_api_post_invalid_email(api_client, email_from):
     data = {
         'email_from': email_from,
         'email_to': 'example1@example.com',
@@ -50,7 +50,7 @@ def test_contactus_api_post_invalid_email(api_client ,email_from):
 
 
 @pytest.mark.parametrize('email_to', ('exampleexample.com', '123123', 'WADADADAD'))
-def test_contactus_api_post_invalid_emailto(api_client ,email_to):
+def test_contactus_api_post_invalid_emailto(api_client, email_to):
     data = {
         'email_from': 'example1@example.com',
         'email_to': email_to,
