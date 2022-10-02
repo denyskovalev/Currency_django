@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import JsonResponse
+import datetime
 
 # Create utils
 
@@ -39,3 +40,16 @@ class IsSuperuserRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 # Utils for avatar source create
 def source_avatar(instance, filename):
     return 'bank_icons/{0}/{1}'.format(instance.code_name, filename)
+
+
+# Utils for parser archive private bank
+def get_previous_day(date):
+    previous_day = date - datetime.timedelta(1)
+    return previous_day
+
+
+def get_str_day(date):
+    year = date.timetuple()[0]
+    month = date.timetuple()[1]
+    day = date.timetuple()[2]
+    return f"{day}.{month}.{year}"
