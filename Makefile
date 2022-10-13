@@ -41,3 +41,18 @@ show_coverage:
 
 parse_pb_archive:
 	$(manage_py) parse_privatbank_archive
+
+gunicorn:
+	cd app && gunicorn settings.wsgi:application --bind 0.0.0.0:8000 --workers 8 --log-level info --max-requests 1000 --timeout 10
+
+gunicorn_threads:
+	cd app && gunicorn settings.wsgi:application --bind 0.0.0.0:8000 --workers 8 --threads 2 --log-level info
+
+netstat:
+	netstat -tulpn|grep --color :80
+
+grep:
+	ps ax|grep 80
+
+uwsgi:
+	cd app && uwsgi --http :8001 --module mysite.wsgi
