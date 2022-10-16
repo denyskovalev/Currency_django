@@ -54,5 +54,5 @@ netstat:
 grep:
 	ps ax|grep 80
 
-uwsgi:
-	cd app && uwsgi --http :8001 --module mysite.wsgi
+uwsgi_command:
+	cd app && uwsgi --http :8001 --logger file:/tmp/uwsgi.log --module settings.wsgi
