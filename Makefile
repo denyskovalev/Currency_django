@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-manage_py := python app/manage.py
+manage_py := docker exec -it backend python app/manage.py
 
 run:
 	$(manage_py) runserver 0:8000
@@ -12,10 +12,10 @@ migrate:
 	$(manage_py) migrate
 
 celery_worker:
-	cd app && celery -A settings worker --loglevel=INFO
+	celery -A settings worker --loglevel=INFO
 
 celery_beat:
-	cd app && celery -A settings beat --loglevel=INFO
+	celery -A settings beat --loglevel=INFO
 
 shell_plus:
 	$(manage_py) shell_plus --print-sql
@@ -56,3 +56,12 @@ grep:
 
 uwsgi_command:
 	cd app && uwsgi --http :8001 --logger file:/tmp/uwsgi.log --module settings.wsgi
+
+dokcer-compose-start:
+	systemctl --user start docker-desktop
+
+docker-compose-stop:
+	systemctl --user stop docker-desktop
+
+build_servers:
+	cp -n .env.example .env && docker-compose up -d --build

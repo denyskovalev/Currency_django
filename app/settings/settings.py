@@ -13,12 +13,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-txh#u@-bw6ll(unih0@vro(#^7m875^t$-ga7^yf6k^dd2d%(0'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ['DEBUG']
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(';')
 
 
 # Application definition
@@ -85,13 +85,30 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ['POSTGRES_DB'],
+        'USER': os.environ['POSTGRES_USER'],
+        'PASSWORD': os.environ['POSTGRES_PASSWORD'],
+        'HOST': os.environ['POSTGRES_HOST'],
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': f'{os.environ["MEMCACHED_HOST"]}:{os.environ.get("MEMCACHED_PORT", "11211")}',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -157,11 +174,19 @@ LOGIN_URL = reverse_lazy('login')
 
 AUTH_USER_MODEL = 'accounts.User'
 
-# TODO move to env
-HTTP_SCHEMA = 'http'
-DOMAIN = 'localhost:8000'
+HTTP_SCHEMA = os.environ.get('HTTP_SCHEMA', 'http')  # https
+DOMAIN = os.environ.get('DOMAIN', 'localhost:8000')
 
-CELERY_BROKER_URL = 'amqp://localhost'
+# CELERY_BROKER_URL = f'amqp://guest:guest@localhost:5672//'
+RABBITMQ_DEFAULT_USER = os.environ["RABBITMQ_DEFAULT_USER"]
+RABBITMQ_DEFAULT_PASS = os.environ["RABBITMQ_DEFAULT_PASS"]
+RABBITMQ_DEFAULT_HOST = os.environ.get("RABBITMQ_DEFAULT_HOST", "localhost")
+RABBITMQ_DEFAULT_PORT = os.environ.get("RABBITMQ_DEFAULT_PORT", "5672")
+
+
+CELERY_BROKER_URL = f'amqp://{RABBITMQ_DEFAULT_USER}:{RABBITMQ_DEFAULT_PASS}@' \
+        f'{RABBITMQ_DEFAULT_HOST}:{RABBITMQ_DEFAULT_PORT}//'
+
 CELERY_BEAT_SCHEDULE = {
     'parse_privatbank': {
         'task': 'currency.tasks.parse_privatbank',
